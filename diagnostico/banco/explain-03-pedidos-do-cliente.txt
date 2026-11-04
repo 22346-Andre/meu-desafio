@@ -1,0 +1,53 @@
+                                                           QUERY PLAN                                                           
+--------------------------------------------------------------------------------------------------------------------------------
+ Gather Merge  (cost=24438.20..24438.67 rows=4 width=300) (actual time=375.157..377.951 rows=5 loops=1)
+   Workers Planned: 2
+   Workers Launched: 2
+   Buffers: shared hit=6563 read=14397
+   ->  Sort  (cost=23438.18..23438.18 rows=2 width=300) (actual time=372.602..372.604 rows=2 loops=3)
+         Sort Key: criado_em DESC, id DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=6563 read=14397
+         Worker 0:  Sort Method: quicksort  Memory: 25kB
+         Worker 1:  Sort Method: quicksort  Memory: 25kB
+         ->  Parallel Seq Scan on pedidos  (cost=0.00..23438.17 rows=2 width=300) (actual time=106.371..372.534 rows=2 loops=3)
+               Filter: (cliente_id = 42)
+               Rows Removed by Filter: 166665
+               Buffers: shared hit=6437 read=14397
+ Planning:
+   Buffers: shared hit=84
+ Planning Time: 0.235 ms
+ Execution Time: 377.995 ms
+(18 rows)
+
+                                                             QUERY PLAN                                                             
+------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=18367.94..18367.95 rows=4 width=20) (actual time=162.303..165.754 rows=2 loops=1)
+   Sort Key: id
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=8112 read=1443
+   ->  Gather  (cost=1000.00..18367.90 rows=4 width=20) (actual time=162.025..165.748 rows=2 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=8112 read=1443
+         ->  Parallel Seq Scan on itens_pedido  (cost=0.00..17367.50 rows=2 width=20) (actual time=145.565..160.327 rows=1 loops=3)
+               Filter: (pedido_id = 1)
+               Rows Removed by Filter: 499999
+               Buffers: shared hit=8112 read=1443
+ Planning:
+   Buffers: shared hit=35
+ Planning Time: 0.121 ms
+ Execution Time: 165.765 ms
+(16 rows)
+
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ Index Scan using produtos_pkey on produtos  (cost=0.29..8.30 rows=1 width=44) (actual time=0.021..0.022 rows=1 loops=1)
+   Index Cond: (id = 1)
+   Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=28
+ Planning Time: 0.110 ms
+ Execution Time: 0.033 ms
+(7 rows)
+

@@ -1,0 +1,4 @@
+antes:  5863 14566
+depois: 5882 14629
+pedidos e itens do cliente 42:
+5 10

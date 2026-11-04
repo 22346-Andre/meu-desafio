@@ -1,0 +1,5 @@
+controle sem requisicao: 5966 -> 5968
+cliente 42 (pedidos itens): 5 10
+sessoes antes/depois: 5970 -> 5988
+cliente 7 (pedidos itens): 5 10
+sessoes antes/depois: 5991 -> 6009

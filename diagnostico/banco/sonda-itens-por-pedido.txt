@@ -1,0 +1,16 @@
+                                                         QUERY PLAN                                                          
+-----------------------------------------------------------------------------------------------------------------------------
+ Gather  (cost=1000.00..18367.90 rows=4 width=20) (actual time=107.962..112.322 rows=2 loops=1)
+   Workers Planned: 2
+   Workers Launched: 2
+   Buffers: shared hit=8880 read=675
+   ->  Parallel Seq Scan on itens_pedido  (cost=0.00..17367.50 rows=2 width=20) (actual time=93.066..106.221 rows=1 loops=3)
+         Filter: (pedido_id = 1)
+         Rows Removed by Filter: 499999
+         Buffers: shared hit=8880 read=675
+ Planning:
+   Buffers: shared hit=69
+ Planning Time: 0.197 ms
+ Execution Time: 112.356 ms
+(12 rows)
+

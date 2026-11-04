@@ -1,0 +1,6 @@
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM pedidos WHERE cliente_id = 42 ORDER BY criado_em DESC, id DESC;
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM itens_pedido WHERE pedido_id = 1 ORDER BY id;
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM produtos WHERE id = 1;

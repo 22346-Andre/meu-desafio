@@ -1,0 +1,6 @@
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT count(*) AS total FROM pedidos WHERE status = 'pago';
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM pedidos WHERE status = 'pago' ORDER BY criado_em DESC, id DESC LIMIT 20 OFFSET 0;
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM pedidos WHERE status = 'pago' ORDER BY criado_em DESC, id DESC LIMIT 20 OFFSET 299980;

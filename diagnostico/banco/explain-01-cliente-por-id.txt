@@ -1,0 +1,11 @@
+                                                       QUERY PLAN                                                        
+-------------------------------------------------------------------------------------------------------------------------
+ Index Scan using clientes_pkey on clientes  (cost=0.29..8.31 rows=1 width=60) (actual time=0.024..0.026 rows=1 loops=1)
+   Index Cond: (id = 1)
+   Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=73
+ Planning Time: 0.423 ms
+ Execution Time: 0.072 ms
+(7 rows)
+
