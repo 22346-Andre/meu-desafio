@@ -1,0 +1,8 @@
+  status   | count  
+-----------+--------
+ cancelado |  50000
+ entregue  | 125000
+ pago      | 300000
+ pendente  |  25000
+(4 rows)
+

@@ -1,0 +1,9 @@
+                                      List of relations
+ Schema |     Name     | Type  | Owner | Persistence | Access method |  Size   | Description 
+--------+--------------+-------+-------+-------------+---------------+---------+-------------
+ public | clientes     | table | loja  | permanent   | heap          | 9288 kB | 
+ public | itens_pedido | table | loja  | permanent   | heap          | 75 MB   | 
+ public | pedidos      | table | loja  | permanent   | heap          | 163 MB  | 
+ public | produtos     | table | loja  | permanent   | heap          | 1560 kB | 
+(4 rows)
+
