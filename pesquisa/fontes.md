@@ -22,3 +22,12 @@ Regra: cada fonte só entra no artigo depois de aberta e lida. Preencher "Acesso
 | 9 | Yang et al., How not to structure your database-backed web applications, ICSE 2018 | https://doi.org/10.1145/3180155.3180194 | | [ ] | Estudo de 12 aplicações com ORM: 9 anti-padrões; 64 correções com aceleração mediana de 2x. Estudo em Rails; relação com a API é por analogia. Acadêmica. | P1 |
 | 10 | PostgreSQL 16, Row and Array Comparisons (ANY/SOME) | https://www.postgresql.org/docs/16/functions-comparisons.html | | [ ] | expressão = ANY(array) é verdadeiro se algum elemento casar; extensão do PostgreSQL. | P1 |
 | 11 | OpenReplay, Understanding the N+1 Query Problem | https://blog.openreplay.com/n-1-query-problem/ | | [ ] | Duas correções: JOIN (uma ida, pode duplicar linhas) ou consulta em lote com IN (duas idas, sem duplicar). Blog; peso menor. | P1 |
+
+## Tema 3: agregação e pré-agregação
+
+| # | Fonte | Link | Acesso | Verificado | O que afirma (com minhas palavras) | Problemas |
+|---|---|---|---|---|---|---|
+| 12 | PostgreSQL 16, Materialized Views | https://www.postgresql.org/docs/16/rules-materializedviews.html | | [ ] | Visão materializada guarda o resultado como tabela; leitura costuma ser bem mais rápida, mas os dados nem sempre estão atuais; aceita índices. | P5, P6 |
+| 13 | PostgreSQL 16, REFRESH MATERIALIZED VIEW | https://www.postgresql.org/docs/16/sql-refreshmaterializedview.html | | [ ] | Substitui todo o conteúdo; CONCURRENTLY evita bloquear leituras e exige índice único em colunas simples. (Lida por cópia das páginas de manual; confirmar no site oficial.) | P5, P6 |
+| 14 | Gupta e Mumick, Maintenance of Materialized Views: Problems, Techniques, and Applications, IEEE Data Eng. Bull. 18(2), 1995 | https://dblp.org/rec/journals/debu/GuptaM95.html | | [ ] | Levantamento sobre visões materializadas, aplicações e problemas de manutenção. Acadêmica. (Li só o resumo; ler antes de citar.) | P5, P6 |
+| 15 | Winand, Use The Index Luke: Obfuscated Conditions, Dates | https://use-the-index-luke.com/sql/where-clause/obfuscation/dates | | [ ] | Função sobre a coluna de data impede o índice comum; usar condição de intervalo explícita. Exemplos em Oracle/MySQL; confirmar no PostgreSQL com EXPLAIN. | P5 |
