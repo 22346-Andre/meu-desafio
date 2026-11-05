@@ -71,31 +71,45 @@ rotas.get('/clientes/:id/pedidos', assincrono(async (req, res) => {
     [id],
   );
 
-  const resposta = [];
-  for (const pedido of pedidos) {
-    const itens = await consultar('SELECT * FROM itens_pedido WHERE pedido_id = $1 ORDER BY id', [pedido.id]);
+  // Consultas em lote: itens de todos os pedidos e produtos de todos os itens, em vez de uma consulta por pedido e por item.
+  const idsPedidos = pedidos.map((pedido) => pedido.id);
+  const itens = idsPedidos.length === 0 ? [] : await consultar(
+    'SELECT * FROM itens_pedido WHERE pedido_id = ANY($1::int[]) ORDER BY pedido_id, id',
+    [idsPedidos],
+  );
 
-    const itensFormatados = [];
+  const idsProdutos = [...new Set(itens.map((item) => item.produto_id))];
+  const produtos = idsProdutos.length === 0 ? [] : await consultar(
+    'SELECT * FROM produtos WHERE id = ANY($1::int[])',
+    [idsProdutos],
+  );
+  const nomePorProduto = new Map(produtos.map((produto) => [produto.id, produto.nome]));
+
+  const itensPorPedido = new Map();
+  for (const item of itens) {
+    if (!itensPorPedido.has(item.pedido_id)) itensPorPedido.set(item.pedido_id, []);
+    itensPorPedido.get(item.pedido_id).push(item);
+  }
+
+  const resposta = pedidos.map((pedido) => {
     let total = 0;
-    for (const item of itens) {
-      const [produto] = await consultar('SELECT * FROM produtos WHERE id = $1', [item.produto_id]);
-      itensFormatados.push({
+    const itensFormatados = (itensPorPedido.get(pedido.id) || []).map((item) => {
+      total += item.quantidade * item.preco_unitario_centavos;
+      return {
         produto_id: item.produto_id,
-        produto_nome: produto.nome,
+        produto_nome: nomePorProduto.get(item.produto_id),
         quantidade: item.quantidade,
         preco_unitario_centavos: item.preco_unitario_centavos,
-      });
-      total += item.quantidade * item.preco_unitario_centavos;
-    }
-
-    resposta.push({
+      };
+    });
+    return {
       id: pedido.id,
       status: pedido.status,
       criado_em: pedido.criado_em,
       total_centavos: total,
       itens: itensFormatados,
-    });
-  }
+    };
+  });
 
   res.json(resposta);
 }));
