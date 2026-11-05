@@ -56,3 +56,7 @@ pedidos-do-cliente ~200 ms, pedidos-por-status ~30 a 80, vendas-por-dia ~22, top
 - Controle sem requisição: +2 em 3 s, sendo 1 da própria leitura e o outro provavelmente o healthcheck do compose.
 - Limite: os dois clientes têm o mesmo tamanho, então o teste mostra a contagem prevista, mas não a escala com o tamanho do cliente.
 - Medição anterior (n-mais-1-cliente-42.txt): +19 sessões e +63 transações, não conclusiva. xact_commit não foi explicado e não é usado como prova.
+
+## Atualização do P3 depois do experimento 03 (P3b: paginação profunda)
+- Fato: com o índice (status, criado_em DESC, id DESC), a contagem passou a Index Only Scan (22,3 ms) e a página 1 a Index Scan (0,9 ms), mas a página 15000 (OFFSET 299980) continuou em Seq Scan com ordenação em disco, 582,3 ms em execução única (diagnostico/banco/depois-03-explain-04-pedidos-por-status.txt).
+- Hipótese de causa: pular 300 mil linhas por índice exige ler as linhas na tabela, e o planejador estima isso mais caro que varrer e ordenar. A rota usa SELECT * e devolve só 4 colunas; um índice que cubra essas colunas poderia dispensar a leitura da tabela. Não testado.

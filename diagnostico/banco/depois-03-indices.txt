@@ -1,0 +1,12 @@
+                                                    List of relations
+ Schema |            Name            | Type  | Owner |    Table     | Persistence | Access method |  Size   | Description 
+--------+----------------------------+-------+-------+--------------+-------------+---------------+---------+-------------
+ public | clientes_pkey              | index | loja  | clientes     | permanent   | btree         | 2208 kB | 
+ public | idx_itens_pedido_pedido_id | index | loja  | itens_pedido | permanent   | btree         | 21 MB   | 
+ public | idx_pedidos_cliente_criado | index | loja  | pedidos      | permanent   | btree         | 19 MB   | 
+ public | idx_pedidos_status_criado  | index | loja  | pedidos      | permanent   | btree         | 21 MB   | 
+ public | itens_pedido_pkey          | index | loja  | itens_pedido | permanent   | btree         | 32 MB   | 
+ public | pedidos_pkey               | index | loja  | pedidos      | permanent   | btree         | 11 MB   | 
+ public | produtos_pkey              | index | loja  | produtos     | permanent   | btree         | 456 kB  | 
+(7 rows)
+
