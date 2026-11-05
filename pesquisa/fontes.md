@@ -42,3 +42,10 @@ Regra: cada fonte só entra no artigo depois de aberta e lida. Preencher "Acesso
 | 19 | pganalyze, Tuning random_page_cost and how index correlation affects query plans | https://pganalyze.com/blog/5mins-postgres-tuning-random-page-cost | | [ ] | Resume um caso de produção em que ajustar random_page_cost acelerou muito consultas. Secundário; achar o texto original. Caso de mercado. | P8 |
 | 20 | Cybertec, Better PostgreSQL performance on SSDs | https://www.cybertec-postgresql.com/en/better-postgresql-performance-on-ssds/ | | [ ] | Em SSD, random_page_cost perto de 1 costuma ser benéfico. Verificar a data do texto. | P8 |
 | 21 | Vondra, Some more thoughts on random_page_cost | https://vondra.me/posts/some-more-thoughts-on-random-page-cost/ | | [ ] | O ajuste deve ser específico do sistema e guiado por monitoramento; o 4,0 nunca foi o custo cru de I/O aleatório. Contraponto às fontes 19 e 20. | P8 |
+
+## Tema 5: custo (limites de CPU e memória)
+
+| # | Fonte | Link | Acesso | Verificado | O que afirma (com minhas palavras) | Problemas |
+|---|---|---|---|---|---|---|
+| 22 | Docker Docs, Resource constraints | https://docs.docker.com/engine/containers/resource_constraints/ | | [ ] | Container sem limite por padrão; é possível limitar CPU e memória; exceder o limite de memória pode levar ao encerramento de processos. | custo |
+| 23 | Docker Docs, Compose Deploy Specification | https://docs.docker.com/reference/compose-file/deploy/ | | [ ] | resources distingue limits (teto) de reservations (mínimo); cpus e memory.  | custo |
