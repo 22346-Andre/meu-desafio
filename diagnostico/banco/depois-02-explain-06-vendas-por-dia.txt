@@ -1,0 +1,21 @@
+                                                                         QUERY PLAN                                                                         
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather  (cost=1000.43..33684.63 rows=6729 width=297) (actual time=0.502..135.660 rows=57314 loops=1)
+   Workers Planned: 2
+   Workers Launched: 2
+   Buffers: shared hit=88207 read=9301
+   ->  Nested Loop  (cost=0.43..32011.73 rows=2804 width=297) (actual time=0.281..102.492 rows=19105 loops=3)
+         Buffers: shared hit=88207 read=9301
+         ->  Parallel Seq Scan on pedidos p  (cost=0.00..25521.50 rows=935 width=289) (actual time=0.248..89.206 rows=6369 loops=3)
+               Filter: ((status <> 'cancelado'::text) AND ((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-31'::date))
+               Rows Removed by Filter: 160297
+               Buffers: shared hit=11533 read=9301
+         ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i  (cost=0.43..6.90 rows=4 width=12) (actual time=0.001..0.002 rows=3 loops=19108)
+               Index Cond: (pedido_id = p.id)
+               Buffers: shared hit=76674
+ Planning:
+   Buffers: shared hit=267
+ Planning Time: 0.672 ms
+ Execution Time: 137.438 ms
+(17 rows)
+
