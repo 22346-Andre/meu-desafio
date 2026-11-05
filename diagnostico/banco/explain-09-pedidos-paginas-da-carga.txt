@@ -1,0 +1,35 @@
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=2949.51..2955.42 rows=20 width=300) (actual time=11.558..11.565 rows=20 loops=1)
+   Buffers: shared hit=9772 read=280
+   ->  Index Scan using idx_pedidos_status_criado on pedidos  (cost=0.42..87473.30 rows=296017 width=300) (actual time=0.044..11.290 rows=10000 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Buffers: shared hit=9772 read=280
+ Planning:
+   Buffers: shared hit=145
+ Planning Time: 0.444 ms
+ Execution Time: 11.589 ms
+(9 rows)
+
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5904.50..5910.41 rows=20 width=300) (actual time=11.495..11.509 rows=20 loops=1)
+   Buffers: shared hit=20008 read=93
+   ->  Index Scan using idx_pedidos_status_criado on pedidos  (cost=0.42..87473.30 rows=296017 width=300) (actual time=0.013..10.997 rows=20000 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Buffers: shared hit=20008 read=93
+ Planning Time: 0.047 ms
+ Execution Time: 11.518 ms
+(7 rows)
+
+                                                                       QUERY PLAN                                                                       
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=30068.04..30098.14 rows=20 width=300) (actual time=41.378..41.404 rows=20 loops=1)
+   Buffers: shared hit=15112 read=5011
+   ->  Index Scan using idx_pedidos_status_criado on pedidos  (cost=0.42..76824.85 rows=51050 width=300) (actual time=0.013..40.818 rows=20000 loops=1)
+         Index Cond: (status = 'cancelado'::text)
+         Buffers: shared hit=15112 read=5011
+ Planning Time: 0.049 ms
+ Execution Time: 41.417 ms
+(7 rows)
+

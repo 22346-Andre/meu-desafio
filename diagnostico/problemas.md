@@ -60,3 +60,12 @@ pedidos-do-cliente ~200 ms, pedidos-por-status ~30 a 80, vendas-por-dia ~22, top
 ## Atualização do P3 depois do experimento 03 (P3b: paginação profunda)
 - Fato: com o índice (status, criado_em DESC, id DESC), a contagem passou a Index Only Scan (22,3 ms) e a página 1 a Index Scan (0,9 ms), mas a página 15000 (OFFSET 299980) continuou em Seq Scan com ordenação em disco, 582,3 ms em execução única (diagnostico/banco/depois-03-explain-04-pedidos-por-status.txt).
 - Hipótese de causa: pular 300 mil linhas por índice exige ler as linhas na tabela, e o planejador estima isso mais caro que varrer e ordenar. A rota usa SELECT * e devolve só 4 colunas; um índice que cubra essas colunas poderia dispensar a leitura da tabela. Não testado.
+
+## Nota sobre o que o teste de carga exercita (leitura de carga/teste-carga.js)
+- Fato: /pedidos usa pagina de 1 a 1000 (OFFSET até 19.980) e os quatro status sorteados por igual; a página 15000 só aparece no contrato. O P3b (paginação profunda) fica como risco de pior caso, não como gargalo medido na carga.
+- Fato: vendas-por-dia usa janelas de 7 dias (inicio de 0 a 724 dias a partir de 2024-01-01); o EXPLAIN 06 usou 31 dias e é um caso mais pesado. EXPLAIN com 7 dias em diagnostico/banco/explain-08-vendas-por-dia-7-dias.txt.
+- Fato: cada usuário virtual faz uma requisição por iteração, sem pausa; a latência média acompanha 20 usuários dividido pela vazão.
+
+## Atualização do P5 e do P6 (execuções repetidas com cache aquecido)
+- Fato: com a janela de 7 dias da carga, vendas-por-dia leva de 32 a 88 ms em consulta isolada com cache aquecido (diagnostico/banco/explain-08-repeticoes.txt); a primeira execução depois de reiniciar o Docker levou 820,6 ms. O 576,8 ms de diagnostico/banco/explain-08-vendas-por-dia-7-dias.txt foi uma execução com cache frio. A varredura de pedidos custa ~24 ms dentro do plano.
+- Estimativa (execuções isoladas, tempo de relógio): top-produtos leva ~1.068 ms por chamada; com 2% das requisições a ~9,85 req/s, são ~0,2 chamadas por segundo, ou ~21% de 1 CPU, a maior fatia individual. vendas-por-dia soma ~3 ms por requisição em média.

@@ -1,0 +1,25 @@
+Consulta de vendas-por-dia com janela de 7 dias, 8 execuções seguidas (cache aquecido)
+--- execução 1
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.139..35.485 rows=1438 loops=3)
+ Execution Time: 47.619 ms
+--- execução 2
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.189..57.147 rows=1438 loops=3)
+ Execution Time: 82.023 ms
+--- execução 3
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.253..29.524 rows=1438 loops=3)
+ Execution Time: 41.622 ms
+--- execução 4
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.141..23.849 rows=1438 loops=3)
+ Execution Time: 32.069 ms
+--- execução 5
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.163..43.645 rows=1438 loops=3)
+ Execution Time: 87.797 ms
+--- execução 6
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.103..28.433 rows=1438 loops=3)
+ Execution Time: 42.471 ms
+--- execução 7
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.158..25.034 rows=1438 loops=3)
+ Execution Time: 86.763 ms
+--- execução 8
+         ->  Parallel Seq Scan on pedidos p  (actual time=0.099..27.969 rows=1438 loops=3)
+ Execution Time: 36.481 ms

@@ -1,0 +1,15 @@
+pgbench: 1 cliente, 10 s por teste, socket local; -C = conexão nova a cada transação
+== s1, conexão persistente
+latency average = 0.086 ms
+tps = 11628.518727 (without initial connection time)
+== s1, conexão nova a cada transação (-C)
+latency average = 3.700 ms
+average connection time = 1.961 ms
+tps = 270.257993 (including reconnection times)
+== s2, conexão persistente
+latency average = 0.111 ms
+tps = 8983.657766 (without initial connection time)
+== s2, conexão nova a cada transação (-C)
+latency average = 4.124 ms
+average connection time = 2.109 ms
+tps = 242.459170 (including reconnection times)
