@@ -90,3 +90,9 @@ pedidos-do-cliente ~200 ms, pedidos-por-status ~30 a 80, vendas-por-dia ~22, top
 - Fato: o pico de memória do banco chegou a 506,0 MiB (98,8% do limite de 512 MiB) e o pico numérico de CPU da API a 41,4% de 1 CPU (83% do limite de 0,5 CPU) (analise/06-picos.md). Não verificado se a memória do docker stats inclui cache de arquivos.
 - Fato: o cpu_max do recursos.txt da API (41,4, 42,5 e 38,1) bate com os picos numéricos, como previsto pela hipótese de comparação de texto no medir.sh.
 - Medição feita em outra sessão do Docker (banco reiniciado) que a do experimento 05.
+
+## Notas depois do experimento 07 (índice sobre lower(email))
+- Fato: a consulta de e-mail passou de 38,112 ms (Seq Scan, 99.999 linhas descartadas, diagnostico/banco/explain-02-cliente-por-email.txt) para 0,969 ms (Index Scan em idx_clientes_email_lower, diagnostico/banco/depois-07-explain-02-cliente-por-email.txt). O índice ocupa 4.792 kB (diagnostico/banco/depois-07-indices.txt).
+- Fato: a CPU da API por requisição ficou em ~7,8 ms nos experimentos 06 e 07 (CPU média ÷ req/s). O pico numérico de CPU da API foi de 48,4% de 1 CPU, ou 97% do limite de 0,5 CPU; o do banco, de 107,9% de 1 CPU, com média de 98,3% (analise/07-picos.md, analise/07-medianas.md). O pico de memória do banco foi de 497,1 MiB (97% do limite de 512 MiB).
+- Estimativa: parcela do tempo dos usuários por rota no experimento 07 (mediana × requisições, execução de 18:32): pedidos-do-cliente ~31%, vendas-por-dia ~21%, pedidos-por-status ~18%, busca-produtos ~12%, cliente ~11%, cliente-por-email ~7%, top-produtos ~1%.
+- Hipótese: a pedidos-do-cliente leva 29 ms isolada e ~0,6 s sob carga porque são 4 consultas sequenciais num banco saturado; menos idas ao banco reduziriam a espera. Não testado.

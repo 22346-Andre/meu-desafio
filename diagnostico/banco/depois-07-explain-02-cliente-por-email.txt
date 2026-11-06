@@ -1,0 +1,15 @@
+                                                                QUERY PLAN                                                                
+------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=8.45..8.45 rows=1 width=60) (actual time=0.496..0.496 rows=1 loops=1)
+   Sort Key: id
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=6 read=1
+   ->  Index Scan using idx_clientes_email_lower on clientes  (cost=0.42..8.44 rows=1 width=60) (actual time=0.414..0.415 rows=1 loops=1)
+         Index Cond: (lower(email) = 'cliente4@exemplo.com'::text)
+         Buffers: shared hit=3 read=1
+ Planning:
+   Buffers: shared hit=93 read=15
+ Planning Time: 4.200 ms
+ Execution Time: 0.969 ms
+(11 rows)
+
