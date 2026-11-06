@@ -1,0 +1,9 @@
+CPU da API (cgroup, usage_usec) por requisição, API sem carga, 1 requisição de aquecimento e 100 em sequência
+controle (5 s sem requisicao): 18.42 ms de CPU
+cliente                 1.87 ms de CPU da API por requisicao (n=100)
+pedidos-do-cliente      3.08 ms de CPU da API por requisicao (n=100)
+cliente-por-email       1.83 ms de CPU da API por requisicao (n=100)
+pedidos-por-status      2.34 ms de CPU da API por requisicao (n=100)
+busca-produtos          2.08 ms de CPU da API por requisicao (n=100)
+vendas-por-dia         78.77 ms de CPU da API por requisicao (n=100)
+top-produtos            2.15 ms de CPU da API por requisicao (n=100)
