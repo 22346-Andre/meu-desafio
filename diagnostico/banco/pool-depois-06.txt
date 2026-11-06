@@ -1,0 +1,4 @@
+controle sem requisicao: 129 -> 130
+cliente 42: sessoes antes/depois: 131 -> 134
+cliente 7: sessoes antes/depois: 135 -> 136
+conexoes abertas agora no banco: 2

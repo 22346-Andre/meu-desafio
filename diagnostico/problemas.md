@@ -83,3 +83,10 @@ pedidos-do-cliente ~200 ms, pedidos-por-status ~30 a 80, vendas-por-dia ~22, top
 - Fato: o pico de memória do banco chegou a 489,2 MiB (95,5% do limite de 512 MiB) nas execuções do 05 (analise/05-picos.md). Não verificado se o número inclui cache de arquivos do sistema.
 - Consistência com a hipótese do cpu_max: no 05 o cpu_max da API (32,0, 32,7 e 33,5, todos com dois dígitos) bate com os picos numéricos do recursos.csv, e o do banco (99,8 e 99,9) fica abaixo da média (100,9) e dos picos numéricos (108,6 a 109,4). Compatível com comparação de texto no medir.sh; hipótese, o script não foi lido por inteiro.
 - Risco da visão materializada: só é correta com dados fixos e API somente de leitura; com escrita, exigiria REFRESH MATERIALIZED VIEW (fonte 13 de pesquisa/fontes.md).
+
+## Notas depois do experimento 06 (pool de conexões)
+- Fato: sessões novas por chamada de /clientes/:id/pedidos: 4 a 5 depois do experimento 04, 2 e 0 com o pool (diagnostico/banco/pool-depois-06.txt); 2 conexões abertas em repouso; nenhum erro de pool no log da API.
+- Conta derivada: CPU média do banco por requisição de 0,046 para 0,027 CPU-segundo, ~19 ms por requisição, ou ~11 ms por conexão evitada (~1,75 conexões por requisição depois do N+1); o pgbench (diagnostico/banco/custo-conexao.txt) tinha medido ~4 ms de tempo de relógio por conexão, por baixo (um cliente, socket local, consulta simples).
+- Fato: o pico de memória do banco chegou a 506,0 MiB (98,8% do limite de 512 MiB) e o pico numérico de CPU da API a 41,4% de 1 CPU (83% do limite de 0,5 CPU) (analise/06-picos.md). Não verificado se a memória do docker stats inclui cache de arquivos.
+- Fato: o cpu_max do recursos.txt da API (41,4, 42,5 e 38,1) bate com os picos numéricos, como previsto pela hipótese de comparação de texto no medir.sh.
+- Medição feita em outra sessão do Docker (banco reiniciado) que a do experimento 05.
