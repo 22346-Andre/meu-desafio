@@ -1,0 +1,17 @@
+Medição: 07-indice-email-lower
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        2765
+Requisições/s:      45.72
+Tempo de resposta:  mediana 311.1 ms | p95 1127.1 ms | p99 1787.9 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               700       175.7 ms      365.6 ms      448.6 ms      0.0%    
+cliente-por-email     402       191.6 ms      384.9 ms      481.1 ms      0.0%    
+pedidos-do-cliente    583       591.4 ms      1013.4 ms     1188.9 ms     0.0%    
+pedidos-por-status    390       520.3 ms      1300.6 ms     1603.3 ms     0.0%    
+busca-produtos        428       307.5 ms      524.9 ms      659.7 ms      0.0%    
+vendas-por-dia        217       1092.7 ms     1991.6 ms     2315.2 ms     0.0%    
+top-produtos          45        193.3 ms      383.9 ms      577.8 ms      0.0%    
