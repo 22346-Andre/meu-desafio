@@ -1,0 +1,12 @@
+                                                                            QUERY PLAN                                                                            
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.29..1.04 rows=10 width=57) (actual time=0.081..0.157 rows=10 loops=1)
+   Buffers: shared hit=12
+   ->  Index Scan using idx_mv_receita_por_produto on mv_receita_por_produto  (cost=0.29..1436.31 rows=19206 width=57) (actual time=0.080..0.154 rows=10 loops=1)
+         Buffers: shared hit=12
+ Planning:
+   Buffers: shared hit=77
+ Planning Time: 0.380 ms
+ Execution Time: 0.541 ms
+(8 rows)
+
