@@ -1,0 +1,3 @@
+controle sem requisicao: 5337 -> 5338
+cliente 42 (5 pedidos, 10 itens): sessoes antes/depois: 5339 -> 5345
+cliente 7 (5 pedidos, 10 itens): sessoes antes/depois: 5346 -> 5351

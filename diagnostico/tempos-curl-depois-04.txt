@@ -1,0 +1,31 @@
+tempo total por requisição (curl, API aquecida, sem carga), 5 repetições por rota
+== /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-01-07
+0.669979
+0.159095
+0.134628
+0.124436
+0.205526
+== /relatorios/top-produtos?limite=10
+1.141036
+0.916025
+0.838233
+0.905002
+0.849116
+== /pedidos?status=pago&pagina=500
+0.070715
+0.068042
+0.067439
+0.066911
+0.070816
+== /clientes?email=cliente500%40exemplo.com
+0.059099
+0.037432
+0.042543
+0.037353
+0.036683
+== /clientes/42/pedidos
+0.028938
+0.028843
+0.031183
+0.028463
+0.031003
