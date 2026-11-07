@@ -1,0 +1,1 @@
+vendas-por-dia          1.73 ms de CPU da API por requisicao (n=100)

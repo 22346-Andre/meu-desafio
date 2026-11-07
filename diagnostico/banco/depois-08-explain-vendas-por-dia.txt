@@ -1,0 +1,31 @@
+                                                                                      QUERY PLAN                                                                                       
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=25743.82..26659.75 rows=2251 width=60) (actual time=92.421..99.041 rows=7 loops=1)
+   Group Key: ((p.criado_em)::date)
+   Buffers: shared hit=20296
+   ->  Gather Merge  (cost=25743.82..26530.32 rows=6753 width=24) (actual time=92.004..97.922 rows=12945 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=20296
+         ->  Sort  (cost=24743.79..24750.83 rows=2814 width=24) (actual time=89.390..89.557 rows=4315 loops=3)
+               Sort Key: ((p.criado_em)::date), p.id
+               Sort Method: quicksort  Memory: 318kB
+               Buffers: shared hit=20296
+               Worker 0:  Sort Method: quicksort  Memory: 465kB
+               Worker 1:  Sort Method: quicksort  Memory: 311kB
+               ->  Nested Loop  (cost=0.85..24582.57 rows=2814 width=24) (actual time=24.720..88.002 rows=4315 loops=3)
+                     Buffers: shared hit=20266
+                     ->  Parallel Index Only Scan using idx_pedidos_status_criado on pedidos p  (cost=0.42..18069.16 rows=938 width=12) (actual time=24.646..79.548 rows=1438 loops=3)
+                           Filter: ((status <> 'cancelado'::text) AND ((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                           Rows Removed by Filter: 165229
+                           Heap Fetches: 504
+                           Buffers: shared hit=2958
+                     ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i  (cost=0.43..6.90 rows=4 width=12) (actual time=0.005..0.005 rows=3 loops=4313)
+                           Index Cond: (pedido_id = p.id)
+                           Buffers: shared hit=17308
+ Planning:
+   Buffers: shared hit=229 read=22
+ Planning Time: 7.156 ms
+ Execution Time: 99.676 ms
+(27 rows)
+
