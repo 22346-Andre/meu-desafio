@@ -1,0 +1,38 @@
+                                                                         QUERY PLAN                                                                          
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=12612.36..12612.37 rows=1 width=8) (actual time=41.264..41.265 rows=1 loops=1)
+   Buffers: shared hit=1624 read=1
+   ->  Index Only Scan using idx_pedidos_status_criado on pedidos  (cost=0.42..11859.40 rows=301183 width=0) (actual time=0.088..30.183 rows=300000 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Heap Fetches: 302
+         Buffers: shared hit=1624 read=1
+ Planning:
+   Buffers: shared hit=83 read=31
+ Planning Time: 8.018 ms
+ Execution Time: 42.000 ms
+(10 rows)
+
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..6.23 rows=20 width=299) (actual time=0.016..0.127 rows=20 loops=1)
+   Buffers: shared hit=23
+   ->  Index Scan using idx_pedidos_status_criado on pedidos  (cost=0.42..87522.08 rows=301183 width=299) (actual time=0.015..0.125 rows=20 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Buffers: shared hit=23
+ Planning:
+   Buffers: shared hit=31 read=4
+ Planning Time: 0.530 ms
+ Execution Time: 0.140 ms
+(9 rows)
+
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=87172.50..87178.31 rows=20 width=299) (actual time=273.850..273.861 rows=20 loops=1)
+   Buffers: shared hit=280201 read=21280
+   ->  Index Scan using idx_pedidos_status_criado on pedidos  (cost=0.42..87522.08 rows=301183 width=299) (actual time=0.012..265.425 rows=300000 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Buffers: shared hit=280201 read=21280
+ Planning Time: 0.028 ms
+ Execution Time: 273.873 ms
+(7 rows)
+
