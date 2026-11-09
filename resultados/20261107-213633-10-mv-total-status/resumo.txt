@@ -1,0 +1,17 @@
+Medição: 10-mv-total-status
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        4922
+Requisições/s:      81.60
+Tempo de resposta:  mediana 188.5 ms | p95 908.5 ms | p99 1200.7 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               1275      94.7 ms       197.9 ms      390.6 ms      0.0%    
+cliente-por-email     715       95.3 ms       196.6 ms      301.7 ms      0.0%    
+pedidos-do-cliente    1023      292.3 ms      598.0 ms      792.8 ms      0.0%    
+pedidos-por-status    712       198.1 ms      1096.0 ms     1494.9 ms     0.0%    
+busca-produtos        728       196.9 ms      305.3 ms      497.9 ms      0.0%    
+vendas-por-dia        379       909.5 ms      1307.5 ms     1907.3 ms     0.0%    
+top-produtos          90        94.0 ms       197.5 ms      406.6 ms      0.0%    
