@@ -1,0 +1,15 @@
+                                                     QUERY PLAN                                                      
+---------------------------------------------------------------------------------------------------------------------
+ Result  (cost=1.05..1.06 rows=1 width=8) (actual time=0.022..0.023 rows=1 loops=1)
+   Buffers: shared read=1
+   InitPlan 1 (returns $0)
+     ->  Seq Scan on mv_total_por_status  (cost=0.00..1.05 rows=1 width=8) (actual time=0.020..0.020 rows=1 loops=1)
+           Filter: (status = 'pago'::text)
+           Rows Removed by Filter: 3
+           Buffers: shared read=1
+ Planning:
+   Buffers: shared hit=43 read=27
+ Planning Time: 6.396 ms
+ Execution Time: 0.398 ms
+(11 rows)
+

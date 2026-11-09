@@ -1,0 +1,7 @@
+                                                 List of relations
+ Schema |          Name          |       Type        | Owner | Persistence | Access method |  Size   | Description 
+--------+------------------------+-------------------+-------+-------------+---------------+---------+-------------
+ public | mv_receita_por_produto | materialized view | loja  | permanent   | heap          | 1728 kB | 
+ public | mv_total_por_status    | materialized view | loja  | permanent   | heap          | 16 kB   | 
+(2 rows)
+
