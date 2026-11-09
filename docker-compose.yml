@@ -45,8 +45,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
-          memory: 256M
+          cpus: "0.25"
+          memory: 128M
 
   # Ferramentas: só rodam quando chamadas (scripts/medir.sh e scripts/verificar-contrato.sh).
   carga:
