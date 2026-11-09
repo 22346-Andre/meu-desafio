@@ -1,0 +1,4 @@
+cpu.max do banco (cota e período, em microssegundos)
+100000 100000
+cpu.max da api
+50000 100000

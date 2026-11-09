@@ -1,0 +1,25 @@
+Throttling do cgroup durante uma execução do medir.sh (rótulo 10b-throttle; inclui aquecimento de 15 s, carga de 60 s e contrato)
+banco  períodos: 777 | períodos com throttling: 721 (92.8%) | tempo parado: 517.7 s
+api    períodos: 766 | períodos com throttling: 3 (0.4%) | tempo parado: 0.2 s
+
+cpu.stat do banco depois:
+usage_usec 76223807
+user_usec 64815061
+system_usec 11408745
+nice_usec 0
+nr_periods 939
+nr_throttled 721
+throttled_usec 517698481
+nr_bursts 0
+burst_usec 0
+
+cpu.stat da api depois:
+usage_usec 7809259
+user_usec 5157204
+system_usec 2652055
+nice_usec 0
+nr_periods 785
+nr_throttled 6
+throttled_usec 265589
+nr_bursts 0
+burst_usec 0

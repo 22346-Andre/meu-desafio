@@ -1,0 +1,17 @@
+Medição: 10b-throttle
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        4784
+Requisições/s:      79.20
+Tempo de resposta:  mediana 192.3 ms | p95 997.7 ms | p99 1203.7 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               1252      95.5 ms       199.8 ms      300.3 ms      0.0%    
+cliente-por-email     696       96.2 ms       200.8 ms      302.9 ms      0.0%    
+pedidos-do-cliente    980       294.6 ms      599.8 ms      803.5 ms      0.0%    
+pedidos-por-status    688       198.8 ms      1104.0 ms     1423.4 ms     0.0%    
+busca-produtos        710       199.2 ms      306.2 ms      406.5 ms      0.0%    
+vendas-por-dia        370       997.6 ms      1290.9 ms     1533.8 ms     0.0%    
+top-produtos          88        95.0 ms       195.2 ms      201.5 ms      0.0%    
