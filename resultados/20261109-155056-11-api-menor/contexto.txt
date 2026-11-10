@@ -1,0 +1,12 @@
+rotulo: 11-api-menor
+data: 2026-11-09 15:50:57 -0300
+vus: 20
+duracao: 60s
+aquecimento: 15s
+semente: 42
+commit: 0af1b4c
+arquivos alterados sem commit: 0
+
+limites dos containers:
+  banco: cpus=1000000000 (1e9 = 1 CPU, 0 = sem limite) memoria=536870912 bytes (0 = sem limite)
+  api: cpus=250000000 (1e9 = 1 CPU, 0 = sem limite) memoria=134217728 bytes (0 = sem limite)
