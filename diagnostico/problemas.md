@@ -130,3 +130,12 @@ pedidos-do-cliente ~200 ms, pedidos-por-status ~30 a 80, vendas-por-dia ~22, top
 - Fato: a memória média da API foi de ~28 MiB nas três execuções, contra ~75 MiB nas segunda e terceira execuções dos experimentos 09 e 10 (limite de 256 MiB). Hipótese não verificada: o V8 dimensiona o heap pelo limite do container; enfraquece a hipótese anterior de que a memória acompanhava a idade do processo.
 - Conta derivada: recursos reservados por req/s, contra a linha de base: de 0,41 CPU e 209 MiB (1,5 CPU e 768 MiB a 3,67 req/s) para 0,015 CPU e 7,9 MiB (1,25 CPU e 640 MiB a 81,17 req/s), −96%.
 - O p95 geral subiu 9,4% (910,5 → 995,9 ms), mas já alternava entre ~910 e ~995 ms nas séries 09, 10 e 10b; por rota, os p95 ficaram iguais ou melhores.
+
+## Notas depois do experimento 12 (limites do banco maiores, soma reservada igual à da linha de base)
+- Fato: com o banco em 1,25 CPU e 640 MiB e a API em 0,25 CPU e 128 MiB, a soma reservada é de 1,5 CPU e 768 MiB, igual à da linha de base. A vazão foi de 105,70 req/s contra 3,67 na linha de base (28,8 vezes) e 81,17 no experimento 11 (+30,2%).
+- Fato: o throttling do banco ficou em 96,9%, 96,9% e 97,7% dos períodos ativos (diagnostico/throttle-11-e-12.txt), igual ao do experimento 11 (97,3% a 97,9%): com mais cota o banco consome mais (CPU média de 122,5% de 1 CPU, ~98% do limite de 1,25) e continua limitado.
+- Fato: o pico de memória do banco foi de 501,5 MiB (mediana), 78% do limite de 640 MiB (analise/12-picos.md).
+- Fato: o throttling da API subiu para 8,8%, 4,7% e 2,9% (0,4% com 0,5 CPU; de 0,8% a 5,2% no experimento 11). O pico numérico de CPU da API foi de 14,7% de 1 CPU, 59% do limite de 0,25 CPU.
+- Fato: o cpu_max do recursos.txt do banco (78,1%) ficou abaixo da média (122,5%): inconfiável, ver diagnostico/cpu-max-recursos.txt; usar analise/12-picos.md (pico numérico de 129,8% de 1 CPU).
+- Fato: memória média da API de ~31 MiB na primeira execução e ~75 MiB nas outras duas, com o mesmo limite de 128 MiB do experimento 11, em que foi de ~28 MiB nas três. As hipóteses anteriores (idade do processo; V8 dimensionando o heap pelo limite) não se sustentam; causa não identificada. O pico da API não passou de 76 MiB desde o experimento 08.
+- Conta derivada: recursos reservados por req/s, contra a linha de base: de 0,41 CPU e 209 MiB para 0,014 CPU e 7,3 MiB, −96,5%.

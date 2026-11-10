@@ -7,3 +7,12 @@ Throttling do cgroup durante a execução de 11-api-menor (15:49:08):
 Throttling do cgroup durante a execução de 11-api-menor (15:52:19):
   banco  períodos ativos: 773 | com throttling: 757 (97.9%) | throttled_usec somado: 547.8 s (soma entre CPUs, pode passar do tempo de relógio)
   api    períodos ativos: 776 | com throttling: 7 (0.9%) | throttled_usec somado: 0.5 s (soma entre CPUs, pode passar do tempo de relógio)
+Throttling do cgroup durante a execução de 12-banco-maior (21:53:23):
+  banco  períodos ativos: 773 | com throttling: 749 (96.9%) | throttled_usec somado: 513.7 s (soma entre CPUs, pode passar do tempo de relógio)
+  api    períodos ativos: 775 | com throttling: 68 (8.8%) | throttled_usec somado: 5.4 s (soma entre CPUs, pode passar do tempo de relógio)
+Throttling do cgroup durante a execução de 12-banco-maior (21:56:29):
+  banco  períodos ativos: 776 | com throttling: 752 (96.9%) | throttled_usec somado: 525.0 s (soma entre CPUs, pode passar do tempo de relógio)
+  api    períodos ativos: 773 | com throttling: 36 (4.7%) | throttled_usec somado: 2.6 s (soma entre CPUs, pode passar do tempo de relógio)
+Throttling do cgroup durante a execução de 12-banco-maior (22:00:32):
+  banco  períodos ativos: 770 | com throttling: 752 (97.7%) | throttled_usec somado: 528.5 s (soma entre CPUs, pode passar do tempo de relógio)
+  api    períodos ativos: 771 | com throttling: 22 (2.9%) | throttled_usec somado: 1.5 s (soma entre CPUs, pode passar do tempo de relógio)
