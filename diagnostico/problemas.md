@@ -123,3 +123,10 @@ pedidos-do-cliente ~200 ms, pedidos-por-status ~30 a 80, vendas-por-dia ~22, top
 - Fato: o throttled_usec somado do banco passou de 500 s em uma execução de ~100 s, porque o contador soma o tempo entre as filas de execução de cada CPU; só a fração de períodos é interpretável.
 - Hipótese sustentada, não provada: os degraus de ~100 ms nas medianas por rota (nota do experimento 10) vêm do limite de 1 CPU do banco. O período de 100 ms é confirmado por cpu.max (diagnostico/cpu-max-cgroup.txt) e deve ser conferido na documentação do Docker (fonte 22).
 - Consequência para o plano: o banco é o gargalo por limite de CPU, e a API tem folga (0,4% de throttling, 9% de CPU média, 30 MiB de memória). Experimentos de dimensionamento: reduzir os limites da API (11) e realocar a economia para o banco mantendo a soma reservada (12).
+
+## Notas depois do experimento 11 (limites menores na API)
+- Fato: com a API em 0,25 CPU e 128 MiB, o pico numérico de CPU da API foi de 12,6% de 1 CPU (mediana; 17,4% na primeira execução) e o de memória, de 28,9 MiB (analise/11-picos.md). Sem erros, OOMKilled=false e zero reinícios.
+- Fato: throttling da API 0,4% com 0,5 CPU (execução 10b) e 5,2%, 0,8% e 0,9% com 0,25 CPU (diagnostico/throttle-11-e-12.txt); a de 5,2% foi a primeira execução, logo após recriar a API. Throttling do banco em 97,3%, 97,4% e 97,9% dos períodos ativos.
+- Fato: a memória média da API foi de ~28 MiB nas três execuções, contra ~75 MiB nas segunda e terceira execuções dos experimentos 09 e 10 (limite de 256 MiB). Hipótese não verificada: o V8 dimensiona o heap pelo limite do container; enfraquece a hipótese anterior de que a memória acompanhava a idade do processo.
+- Conta derivada: recursos reservados por req/s, contra a linha de base: de 0,41 CPU e 209 MiB (1,5 CPU e 768 MiB a 3,67 req/s) para 0,015 CPU e 7,9 MiB (1,25 CPU e 640 MiB a 81,17 req/s), −96%.
+- O p95 geral subiu 9,4% (910,5 → 995,9 ms), mas já alternava entre ~910 e ~995 ms nas séries 09, 10 e 10b; por rota, os p95 ficaram iguais ou melhores.
