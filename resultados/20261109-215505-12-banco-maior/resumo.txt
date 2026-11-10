@@ -1,0 +1,17 @@
+Medição: 12-banco-maior
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        6392
+Requisições/s:      105.70
+Tempo de resposta:  mediana 105.1 ms | p95 747.9 ms | p99 899.6 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               1618      90.9 ms       189.5 ms      201.0 ms      0.0%    
+cliente-por-email     945       91.2 ms       190.6 ms      201.6 ms      0.0%    
+pedidos-do-cliente    1359      199.2 ms      402.8 ms      500.8 ms      0.0%    
+pedidos-por-status    926       110.6 ms      803.6 ms      991.1 ms      0.0%    
+busca-produtos        937       190.5 ms      291.2 ms      303.8 ms      0.0%    
+vendas-por-dia        498       788.1 ms      904.8 ms      998.5 ms      0.0%    
+top-produtos          109       11.5 ms       102.1 ms      186.7 ms      0.0%    
