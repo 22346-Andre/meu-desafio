@@ -1,0 +1,118 @@
+BEGIN
+SET
+== 1: sem índice novo, random_page_cost padrão
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate (actual time=698.190..699.469 rows=7 loops=1)
+   Group Key: ((p.criado_em)::date)
+   Buffers: shared hit=15542 read=4456
+   ->  Sort (actual time=697.964..698.371 rows=12945 loops=1)
+         Sort Key: ((p.criado_em)::date), p.id
+         Sort Method: quicksort  Memory: 1092kB
+         Buffers: shared hit=15542 read=4456
+         ->  Nested Loop (actual time=48.361..693.332 rows=12945 loops=1)
+               Buffers: shared hit=15536 read=4456
+               ->  Index Only Scan using idx_pedidos_status_criado on pedidos p (actual time=42.575..93.420 rows=4313 loops=1)
+                     Filter: ((status <> 'cancelado'::text) AND ((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                     Rows Removed by Filter: 495687
+                     Heap Fetches: 0
+                     Buffers: shared hit=1 read=2685
+               ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i (actual time=0.136..0.138 rows=3 loops=4313)
+                     Index Cond: (pedido_id = p.id)
+                     Buffers: shared hit=15535 read=1771
+ Planning:
+   Buffers: shared hit=218 read=33
+ Planning Time: 9.767 ms
+ Execution Time: 699.618 ms
+(21 rows)
+
+SET
+== 2: sem índice novo, random_page_cost 1,1
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate (actual time=57.672..59.120 rows=7 loops=1)
+   Group Key: ((p.criado_em)::date)
+   Buffers: shared hit=19992
+   ->  Sort (actual time=57.438..57.923 rows=12945 loops=1)
+         Sort Key: ((p.criado_em)::date), p.id
+         Sort Method: quicksort  Memory: 1092kB
+         Buffers: shared hit=19992
+         ->  Nested Loop (actual time=14.793..53.937 rows=12945 loops=1)
+               Buffers: shared hit=19992
+               ->  Index Only Scan using idx_pedidos_status_criado on pedidos p (actual time=14.780..44.610 rows=4313 loops=1)
+                     Filter: ((status <> 'cancelado'::text) AND ((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                     Rows Removed by Filter: 495687
+                     Heap Fetches: 0
+                     Buffers: shared hit=2686
+               ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i (actual time=0.002..0.002 rows=3 loops=4313)
+                     Index Cond: (pedido_id = p.id)
+                     Buffers: shared hit=17306
+ Planning:
+   Buffers: shared hit=16
+ Planning Time: 0.165 ms
+ Execution Time: 59.226 ms
+(21 rows)
+
+RESET
+CREATE INDEX
+ANALYZE
+== 3: com índice sobre criado_em::date, random_page_cost padrão
+                                                           QUERY PLAN                                                            
+---------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate (actual time=19.737..21.022 rows=7 loops=1)
+   Group Key: ((p.criado_em)::date)
+   Buffers: shared hit=17314 read=994
+   ->  Sort (actual time=19.497..19.921 rows=12945 loops=1)
+         Sort Key: ((p.criado_em)::date), p.id
+         Sort Method: quicksort  Memory: 1092kB
+         Buffers: shared hit=17314 read=994
+         ->  Nested Loop (actual time=0.297..16.455 rows=12945 loops=1)
+               Buffers: shared hit=17314 read=994
+               ->  Bitmap Heap Scan on pedidos p (actual time=0.292..8.431 rows=4313 loops=1)
+                     Recheck Cond: (((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                     Filter: (status <> 'cancelado'::text)
+                     Rows Removed by Filter: 479
+                     Heap Blocks: exact=995
+                     Buffers: shared hit=8 read=994
+                     ->  Bitmap Index Scan on idx_what_if_criado_em_data (actual time=0.203..0.203 rows=4792 loops=1)
+                           Index Cond: (((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                           Buffers: shared hit=3 read=4
+               ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i (actual time=0.001..0.001 rows=3 loops=4313)
+                     Index Cond: (pedido_id = p.id)
+                     Buffers: shared hit=17306
+ Planning:
+   Buffers: shared hit=42 read=4
+ Planning Time: 0.315 ms
+ Execution Time: 21.053 ms
+(25 rows)
+
+SET
+== 4: com índice sobre criado_em::date, random_page_cost 1,1
+                                                          QUERY PLAN                                                          
+------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate (actual time=6.576..15.083 rows=7 loops=1)
+   Group Key: ((p.criado_em)::date)
+   Buffers: shared hit=22105
+   ->  Incremental Sort (actual time=3.710..13.900 rows=12945 loops=1)
+         Sort Key: ((p.criado_em)::date), p.id
+         Presorted Key: ((p.criado_em)::date)
+         Full-sort Groups: 7  Sort Method: quicksort  Average Memory: 28kB  Peak Memory: 28kB
+         Pre-sorted Groups: 7  Sort Method: quicksort  Average Memory: 150kB  Peak Memory: 150kB
+         Buffers: shared hit=22105
+         ->  Nested Loop (actual time=0.017..11.937 rows=12945 loops=1)
+               Buffers: shared hit=22105
+               ->  Index Scan using idx_what_if_criado_em_data on pedidos p (actual time=0.010..2.012 rows=4313 loops=1)
+                     Index Cond: (((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                     Filter: (status <> 'cancelado'::text)
+                     Rows Removed by Filter: 479
+                     Buffers: shared hit=4799
+               ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i (actual time=0.001..0.002 rows=3 loops=4313)
+                     Index Cond: (pedido_id = p.id)
+                     Buffers: shared hit=17306
+ Planning:
+   Buffers: shared hit=20
+ Planning Time: 0.242 ms
+ Execution Time: 15.113 ms
+(23 rows)
+
+ROLLBACK
