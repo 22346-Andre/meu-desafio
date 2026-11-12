@@ -1,0 +1,17 @@
+Medição: 14-indice-criado-em-data
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        10729
+Requisições/s:      178.26
+Tempo de resposta:  mediana 98.1 ms | p95 207.2 ms | p99 696.3 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               2665      11.0 ms       97.3 ms       102.4 ms      0.0%    
+cliente-por-email     1571      11.8 ms       97.1 ms       101.9 ms      0.0%    
+pedidos-do-cliente    2224      107.2 ms      207.3 ms      295.9 ms      0.0%    
+pedidos-por-status    1559      102.8 ms      695.9 ms      803.4 ms      0.0%    
+busca-produtos        1628      108.5 ms      201.8 ms      290.2 ms      0.0%    
+vendas-por-dia        881       198.5 ms      301.9 ms      1193.1 ms     0.0%    
+top-produtos          201       9.7 ms        97.6 ms       104.9 ms      0.0%    

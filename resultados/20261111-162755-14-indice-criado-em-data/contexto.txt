@@ -1,0 +1,12 @@
+rotulo: 14-indice-criado-em-data
+data: 2026-11-11 16:27:56 -0300
+vus: 20
+duracao: 60s
+aquecimento: 15s
+semente: 42
+commit: e097144
+arquivos alterados sem commit: 0
+
+limites dos containers:
+  banco: cpus=1250000000 (1e9 = 1 CPU, 0 = sem limite) memoria=671088640 bytes (0 = sem limite)
+  api: cpus=250000000 (1e9 = 1 CPU, 0 = sem limite) memoria=134217728 bytes (0 = sem limite)
