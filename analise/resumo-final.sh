@@ -3,7 +3,7 @@
 # Uso (na raiz do repositório): bash analise/resumo-final.sh | tee analise/resumo-final.md
 set -euo pipefail
 
-rotulos=(00-linha-de-base 01-indice-itens-pedido 02-indice-pedidos-cliente 03-indice-pedidos-status 04-n-mais-1-lotes 05-mv-top-produtos 06-pool-10 07-indice-email-lower 08-vendas-sql 09-sem-paralelismo 10-mv-total-status 11-api-menor 12-banco-maior 13-linha-de-base-remedida)
+rotulos=(00-linha-de-base 01-indice-itens-pedido 02-indice-pedidos-cliente 03-indice-pedidos-status 04-n-mais-1-lotes 05-mv-top-produtos 06-pool-10 07-indice-email-lower 08-vendas-sql 09-sem-paralelismo 10-mv-total-status 11-api-menor 12-banco-maior 13-linha-de-base-remedida 14-indice-criado-em-data)
 [ "$#" -gt 0 ] && rotulos=("$@")
 
 echo "| rótulo | req/s | latência mediana (ms) | p95 (ms) | p99 (ms) | CPU média do banco (%) | CPU do banco por requisição (CPU-s) | CPU média da API (%) |"

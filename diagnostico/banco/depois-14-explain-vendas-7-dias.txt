@@ -1,0 +1,22 @@
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=74.70..40044.06 rows=14205 width=298) (actual time=0.317..14.225 rows=12945 loops=1)
+   Buffers: shared hit=18308
+   ->  Bitmap Heap Scan on pedidos p  (cost=74.28..12250.99 rows=4735 width=290) (actual time=0.309..3.926 rows=4313 loops=1)
+         Recheck Cond: (((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+         Filter: (status <> 'cancelado'::text)
+         Rows Removed by Filter: 479
+         Heap Blocks: exact=995
+         Buffers: shared hit=1002
+         ->  Bitmap Index Scan on idx_pedidos_criado_em_data  (cost=0.00..73.09 rows=5267 width=0) (actual time=0.216..0.216 rows=4792 loops=1)
+               Index Cond: (((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+               Buffers: shared hit=7
+   ->  Index Scan using idx_itens_pedido_pedido_id on itens_pedido i  (cost=0.43..5.83 rows=4 width=12) (actual time=0.002..0.002 rows=3 loops=4313)
+         Index Cond: (pedido_id = p.id)
+         Buffers: shared hit=17306
+ Planning:
+   Buffers: shared hit=312 read=46
+ Planning Time: 1.077 ms
+ Execution Time: 14.660 ms
+(18 rows)
+
