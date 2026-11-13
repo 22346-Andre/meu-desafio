@@ -25,3 +25,12 @@ Throttling do cgroup durante a execução de 13-linha-de-base-remedida (10:41:08
 Throttling do cgroup durante a execução de 13-linha-de-base-remedida (10:44:47):
   banco  períodos ativos: 920 | com throttling: 901 (97.9%) | throttled_usec somado: 802.2 s (soma entre CPUs, pode passar do tempo de relógio)
   api    períodos ativos: 871 | com throttling: 3 (0.3%) | throttled_usec somado: 0.1 s (soma entre CPUs, pode passar do tempo de relógio)
+Throttling do cgroup durante a execução de 14-indice-criado-em-data (16:23:54):
+  banco  períodos ativos: 781 | com throttling: 658 (84.3%) | throttled_usec somado: 428.4 s (soma entre CPUs, pode passar do tempo de relógio)
+  api    períodos ativos: 765 | com throttling: 186 (24.3%) | throttled_usec somado: 16.5 s (soma entre CPUs, pode passar do tempo de relógio)
+Throttling do cgroup durante a execução de 14-indice-criado-em-data (16:26:04):
+  banco  períodos ativos: 769 | com throttling: 736 (95.7%) | throttled_usec somado: 459.4 s (soma entre CPUs, pode passar do tempo de relógio)
+  api    períodos ativos: 771 | com throttling: 120 (15.6%) | throttled_usec somado: 9.2 s (soma entre CPUs, pode passar do tempo de relógio)
+Throttling do cgroup durante a execução de 14-indice-criado-em-data (16:29:18):
+  banco  períodos ativos: 772 | com throttling: 703 (91.1%) | throttled_usec somado: 443.9 s (soma entre CPUs, pode passar do tempo de relógio)
+  api    períodos ativos: 769 | com throttling: 170 (22.1%) | throttled_usec somado: 13.9 s (soma entre CPUs, pode passar do tempo de relógio)
