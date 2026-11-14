@@ -405,3 +405,42 @@ Abra o agente dentro da sua cópia desta pasta. Na raiz do t4h-desafios, o `CLAU
 - Em caso de dúvidas, use o canal combinado na largada
 
 Boa sorte no seu desafio!
+
+---
+
+## Resultado do desafio de performance (Tech for Humans, Estágio em Pesquisa e Inovação 2026)
+
+### O problema
+
+A API da loja fictícia (Node.js 20 com Express e PostgreSQL 16, em containers) ficava lenta sob carga e gastava mais recursos do que deveria. Na linha de base, com 20 usuários virtuais por 60 s, ela atendia 3,67 req/s com p95 de 18,2 s, o banco usava ~98% de 1 CPU e a API, ~7% de 0,5 CPU. O objetivo era deixá-la mais rápida e mais barata de rodar sem mudar o que cada rota devolve.
+
+### Resumo dos resultados
+
+Foram 13 mudanças aplicadas e medidas, uma por vez, e uma remedição de controle da linha de base. Os números são medianas de três execuções do `scripts/medir.sh`, com o contrato mantido em todas. A tabela completa está em `analise/resumo-final.md`, e cada experimento, com suas pastas de resultados, em `experimentos.md`.
+
+| Métrica | Linha de base | Final (experimento 14) |
+|---|---|---|
+| Soma de recursos reservada (API + banco) | 1,5 CPU e 768 MiB | 1,5 CPU e 768 MiB |
+| Requisições por segundo | 3,67 | 178,41 |
+| p95 (ms) | 18.163,2 | 206,7 |
+| p99 (ms) | 21.410,6 | 695,2 |
+| CPU do banco por requisição (CPU-segundo) | 0,268 | 0,0069 |
+
+A remedição da linha de base, uma semana depois, no mesmo código, variou até 1,4%, o que mostra a estabilidade do ambiente. O artigo está em `artigo/artigo.md` e as ideias que não foram aplicadas, em `proximos-testes.md`.
+
+### O que foi alterado
+
+Índices em `banco/03-*.sql` a `banco/09-*.sql`; consultas em lote, pool de conexões e agregação no SQL em `api/src/`; visões materializadas em `banco/06-*.sql` e `banco/08-*.sql`; parâmetro do PostgreSQL e limites de recursos em `docker-compose.yml`. O histórico tem um commit `perf:` por mudança, seguido de um commit `chore:` com as medições dela (`git log --oneline`).
+
+### O que não foi alterado
+
+As ferramentas de medição (`scripts/`, `carga/`, `contrato/verificar.js`), o `contrato/base.json` depois de gravado e os dados (`banco/01-estrutura.sql` e `banco/02-dados.sql`) ficaram como vieram.
+
+### Como repetir
+
+Os passos de instalar, subir, gravar o contrato e medir estão acima, neste mesmo README, e continuam valendo. Observações do que foi usado aqui:
+
+- No Windows, rodei no Git Bash com `MSYS_NO_PATHCONV=1` (sem isso o `medir.sh` falha ao montar o caminho do teste de carga no container).
+- Scripts de análise, que só leem `resultados/`: `bash analise/medianas.sh <rotulo>` (medianas de uma série), `bash analise/por-rota.sh <antes> <depois>` (variação do p95 por rota), `bash analise/picos.sh <rotulo>` (picos numéricos de CPU e memória) e `bash analise/resumo-final.sh` (tabela com todos os rótulos). Os valores de `cpu_max` e `mem_max` do `recursos.txt` comparam texto e erram quando os números mudam de casa decimal; use o `picos.sh`.
+- `bash analise/medir-com-throttle.sh <rotulo>` roda o `medir.sh` e resume o throttling de CPU do cgroup do banco e da API na execução.
+- Ambiente das medições: Docker Desktop no Windows com 12 CPUs e 7,69 GiB para o Docker (`diagnostico/ambiente.md`).
